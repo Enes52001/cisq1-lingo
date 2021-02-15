@@ -20,3 +20,8 @@
         | word | guess | feedback              |
         | cow  | cat   | the letter C is right |
 
+#domeinklassen:
+#      Woord
+#      Woorden
+#      Speler
+#      Game
