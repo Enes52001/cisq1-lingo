@@ -3,9 +3,13 @@ package nl.hu.cisq1.lingo.trainer.domain;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import javax.validation.constraints.AssertTrue;
 import java.util.List;
+import java.util.stream.Stream;
 
 import static nl.hu.cisq1.lingo.trainer.domain.Mark.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -62,16 +66,24 @@ class FeedbackTest {
 
         assertTrue((feedback.isGuessvalid()));
     }
-    @Test
-    @DisplayName("als er ")
-    void geeftHint(){
-
-
+    @ParameterizedTest
+    @MethodSource("provideHintExamples")
+    @DisplayName("game gives hint")
+    void geeftHint(String Hint, String wordToGuess, List<Mark> marks){
         String poging = "PAARD";
-        List<Mark> marks = List.of(CORRECT, CORRECT, CORRECT, CORRECT, ABSENT);
         Feedback feedback = new Feedback(poging, marks);
 
 
-        assertTrue((feedback.isGuessvalid()));
+        assertTrue(feedback.giveHint());
     }
+
+
+    static Stream<Arguments> provideHintExamples() {
+        return Stream.of(
+                Arguments.of("P....","PAARD", List.of(CORRECT, CORRECT, CORRECT, CORRECT, ABSENT))
+
+        );
+    }
+
+
 }
