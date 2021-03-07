@@ -74,7 +74,7 @@ class FeedbackTest {
         Feedback feedback = new Feedback(poging, marks);
 
 
-        assertTrue(feedback.giveHint());
+      //  assertTrue(feedback.giveHint());
     }
 
 
@@ -85,5 +85,23 @@ class FeedbackTest {
         );
     }
 
+
+
+    @ParameterizedTest
+    @MethodSource("hintGivesFeedback")
+    @DisplayName("game gives hint")
+    public void giveHintWorks(String attempt, List<Mark> marks, String hint){
+        Feedback feedback = new Feedback(attempt, marks);
+        assertEquals(feedback.giveHint(), hint);
+    }
+    static Stream<Arguments> hintGivesFeedback() {
+        return Stream.of(
+                Arguments.of("PAARD", List.of(CORRECT, CORRECT, CORRECT, CORRECT, CORRECT), "PAARD"),
+                Arguments.of("KOE", List.of(INVALID, INVALID, INVALID, INVALID, INVALID), "....."),
+                Arguments.of("APPEL", List.of(ABSENT, ABSENT, ABSENT, ABSENT, ABSENT), "....."),
+                Arguments.of("AARDE", List.of(ABSENT, CORRECT, ABSENT, ABSENT, ABSENT), ".A..."),
+                Arguments.of("HAARD", List.of(ABSENT, CORRECT, CORRECT, CORRECT, CORRECT), ".AARD")
+        );
+    }
 
 }

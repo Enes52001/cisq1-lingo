@@ -17,9 +17,16 @@ public class Feedback {
         this.marks = mark;
     }
 
-    public boolean giveHint(){
-
-        return true;
+    public String giveHint(){
+        String hint = "";
+        for(int i = 0; i<marks.size() ; i++ ){
+            if(marks.get(i) == CORRECT){
+                hint = hint+attempt.charAt(i);
+            }else{
+                hint=hint+".";
+            }
+        }
+        return hint;
     }
 
 
@@ -32,6 +39,10 @@ public class Feedback {
 //            }
 //        }
 //        return true;
+    }
+
+    public String getAttempt() {
+        return attempt;
     }
 
     public boolean isGuessvalid(){
