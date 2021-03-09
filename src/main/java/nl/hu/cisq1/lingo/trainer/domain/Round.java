@@ -13,7 +13,7 @@ public class Round {
 
     }
 
-    public List<Mark> guess(String attempt){
+    public String guess(String attempt){
         attempts = attempts + 1;
         List<Mark> lijst = new ArrayList<Mark>();
         if(attempt.length() == wordToGuess.length()){
@@ -25,13 +25,13 @@ public class Round {
                 }
             }
             Feedback feedback = new Feedback(attempt, lijst);
-            feedback.giveHint();
-            return lijst;
+            return feedback.giveHint();
         }else{
             for(int i = 0; i<wordToGuess.length() ; i++ ){
                 lijst.add(Mark.INVALID);
             }
-            return lijst;
+            Feedback feedback = new Feedback(attempt, lijst);
+            return feedback.giveHint();
         }
 
     }

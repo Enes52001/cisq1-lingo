@@ -17,22 +17,33 @@ class RoundTest {
     @ParameterizedTest
     @MethodSource("provideGuessWords")
     @DisplayName("kijken of de guess functie het doet")
-    void guessWords(String guess, List<Mark> marks) {
+    void guessWords(String guess, String feedback) {
         Round round = new Round("PAARD");
-        assertEquals(round.guess(guess), marks);
+        assertEquals(round.guess(guess), feedback);
 
     }
 
     static Stream<Arguments> provideGuessWords() {
         return Stream.of(
-                Arguments.of("PAARD", List.of(CORRECT, CORRECT, CORRECT, CORRECT, CORRECT)),
-                Arguments.of("KOE", List.of(INVALID, INVALID, INVALID, INVALID, INVALID)),
-                Arguments.of("APPEL", List.of(ABSENT, ABSENT, ABSENT, ABSENT, ABSENT)),
-                Arguments.of("AARDE", List.of(ABSENT, CORRECT, ABSENT, ABSENT, ABSENT)),
-                Arguments.of("HAARD", List.of(ABSENT, CORRECT, CORRECT, CORRECT, CORRECT))
+                Arguments.of("PAARD", "PAARD"),
+                Arguments.of("KOE", "....."),
+                Arguments.of("APPEL", "....."),
+                Arguments.of("AARDE", ".A..."),
+                Arguments.of("HAARD", ".AARD")
 
         );
     }
+
+//    static Stream<Arguments> provideGuessWords() {
+//        return Stream.of(
+//                Arguments.of("PAARD", List.of(CORRECT, CORRECT, CORRECT, CORRECT, CORRECT)),
+//                Arguments.of("KOE", List.of(INVALID, INVALID, INVALID, INVALID, INVALID)),
+//                Arguments.of("APPEL", List.of(ABSENT, ABSENT, ABSENT, ABSENT, ABSENT)),
+//                Arguments.of("AARDE", List.of(ABSENT, CORRECT, ABSENT, ABSENT, ABSENT)),
+//                Arguments.of("HAARD", List.of(ABSENT, CORRECT, CORRECT, CORRECT, CORRECT))
+//
+//        );
+//    }
 
 
 }

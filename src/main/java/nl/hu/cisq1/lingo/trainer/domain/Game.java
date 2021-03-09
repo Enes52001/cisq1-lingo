@@ -5,10 +5,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Game {
-    private int score;
+    private int roundNumber;
+    private int score = 0;
     private GameState gameState;
     private List<Round> round = new ArrayList<>();
-    private Progress progress;
+
 
     public enum GameState{
         WAITING_FOR_ROUND,
@@ -19,7 +20,6 @@ public class Game {
 
     public void startgame(){
         setGameState(GameState.WAITING_FOR_ROUND);
-
     }
 
     public Round startNewRound(String wordToGuess) {
@@ -29,13 +29,19 @@ public class Game {
         setGameState(GameState.PLAYING);
         Round ronde = new Round(wordToGuess);
         round.add(ronde);
+        roundNumber = (round.size()+1);
         return ronde;
     }
 
-    public List<Mark> makeGuess(String attempt){
+    public String makeGuess(String attempt){
         Round ronde = round.get(round.size()-1);
+        if(!ronde.guess(attempt).contains(".")) {
+            score = score +1;
+        }
         return ronde.guess(attempt);
     }
+
+
 
     public Round getLastRound() {
         return round.get(round.size()-1);
