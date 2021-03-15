@@ -1,13 +1,22 @@
 package nl.hu.cisq1.lingo.trainer.domain;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
 public class Game {
+    @Id
+    @Column(name="round number")
     private int roundNumber;
+    @Column(name="score")
     private int score = 0;
     private GameState gameState;
+    @OneToMany
     private List<Round> round = new ArrayList<>();
 
 
@@ -28,6 +37,7 @@ public class Game {
         }
         setGameState(GameState.PLAYING);
         Round ronde = new Round(wordToGuess);
+        ronde.setWordToGuess(wordToGuess);
         round.add(ronde);
         roundNumber = (round.size()+1);
         return ronde;
@@ -35,10 +45,13 @@ public class Game {
 
     public String makeGuess(String attempt){
         Round ronde = round.get(round.size()-1);
-        if(!ronde.guess(attempt).contains(".")) {
+        if(ronde.guess(attempt).contains(".")) {
+            return ronde.guess(attempt);
+        }else{
             score = score +1;
+            return ronde.guess(attempt);
         }
-        return ronde.guess(attempt);
+
     }
 
 

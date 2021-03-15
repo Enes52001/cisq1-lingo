@@ -40,4 +40,8 @@ public class Round {
         this.attempts = attempts;
     }
 
+    public void setWordToGuess(String wordToGuess) {
+        this.wordToGuess = wordToGuess;
+    }
+
 }

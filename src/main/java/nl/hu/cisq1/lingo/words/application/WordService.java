@@ -1,5 +1,6 @@
 package nl.hu.cisq1.lingo.words.application;
 
+import nl.hu.cisq1.lingo.trainer.data.SpringGameRepository;
 import nl.hu.cisq1.lingo.words.data.SpringWordRepository;
 import nl.hu.cisq1.lingo.words.domain.exception.WordLengthNotSupportedException;
 import org.springframework.stereotype.Service;
