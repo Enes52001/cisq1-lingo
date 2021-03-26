@@ -1,7 +1,9 @@
 package nl.hu.cisq1.lingo.trainer.domain;
 
+import javax.persistence.Entity;
 import java.util.ArrayList;
 import java.util.List;
+
 
 public class Round {
     private int attempts = 0;

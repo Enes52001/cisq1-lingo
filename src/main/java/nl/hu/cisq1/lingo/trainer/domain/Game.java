@@ -11,13 +11,13 @@ import java.util.List;
 @Entity
 public class Game {
     @Id
-    @Column(name="round number")
+//    @Column(name="round number")
     private int roundNumber;
-    @Column(name="score")
+//    @Column(name="score")
     private int score = 0;
     private GameState gameState;
-    @OneToMany
-    private List<Round> round = new ArrayList<>();
+//    @OneToMany
+    private transient List<Round> round = new ArrayList<>();
 
 
     public enum GameState{
