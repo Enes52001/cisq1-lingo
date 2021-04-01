@@ -41,4 +41,9 @@ public class GameService {
     public Game getGame() {
         return game;
     }
+
+//    private Game getGame(Long id){
+//        return gameRepository.findById(id)
+//                .orElseThrow(() -> new RuntimeException("game bestaat niet"));
+//    }
 }

@@ -17,8 +17,21 @@
     <properties>
         <java.version>11</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
 
+
+<!--    <properties>-->
+<!--        <sonar.projectKey>Enes52001_cisq1-lingo</sonar.projectKey>-->
+<!--        <sonar.organization>enes52</sonar.organization>-->
+<!--        <sonar.host.url>https://sonarcloud.io</sonar.host.url>-->
+<!--    </properties>-->
+
+        <java.version>11</java.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <sonar.projectKey>Enes52001_cisq1-lingo</sonar.projectKey>
+        <sonar.organization>enes52</sonar.organization>
+        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+        <sonar.exclusions>**/LingoApplication.java</sonar.exclusions>
+    </properties>
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -145,7 +158,7 @@
             <plugin>
                 <groupId>org.pitest</groupId>
                 <artifactId>pitest-maven</artifactId>
-                <version>1.6.2</version>
+                <version>1.6.4</version>
                 <dependencies>
                     <dependency>
                         <groupId>org.pitest</groupId>
@@ -153,6 +166,13 @@
                         <version>0.12</version>
                     </dependency>
                 </dependencies>
+                <configuration>
+                    <jvmArgs>
+                        -Dspring.profiles.active=ci
+                    </jvmArgs>
+                    <mutationThreshold>90</mutationThreshold>
+                    <timestampedReports>false</timestampedReports>
+                </configuration>
             </plugin>
         </plugins>
     </build>

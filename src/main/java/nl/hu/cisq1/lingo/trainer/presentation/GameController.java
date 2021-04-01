@@ -17,13 +17,13 @@ public class GameController {
     }
     @PostMapping("/startround")
     public void startNewRound(@RequestBody int lengte){
-        gameService.startNewRound(lengte);
+        gameService.startNewRound( lengte);
 
     }
 
     @GetMapping("/guess")
     public String startNewRound(@RequestBody String guess){
-        return gameService.guess(guess);
+        return gameService.guess( guess);
 
     }
 
