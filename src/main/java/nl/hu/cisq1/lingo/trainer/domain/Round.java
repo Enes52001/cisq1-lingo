@@ -38,12 +38,12 @@ public class Round {
 
     }
 
-    public void setAttempts(int attempts) {
-        this.attempts = attempts;
-    }
 
     public void setWordToGuess(String wordToGuess) {
         this.wordToGuess = wordToGuess;
     }
 
+    public String getWordToGuess() {
+        return wordToGuess;
+    }
 }

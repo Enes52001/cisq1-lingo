@@ -12,7 +12,7 @@ import java.util.List;
 public class Game {
     @Id
 //    @Column(name="round number")
-    private int roundNumber;
+    private int roundNumber = 0;
 //    @Column(name="score")
     private int score = 0;
     private GameState gameState;
@@ -39,7 +39,7 @@ public class Game {
         Round ronde = new Round(wordToGuess);
         ronde.setWordToGuess(wordToGuess);
         round.add(ronde);
-        roundNumber = (round.size()+1);
+        roundNumber = (round.size());
         return ronde;
     }
 
@@ -66,5 +66,9 @@ public class Game {
 
     public GameState getGameState() {
         return gameState;
+    }
+
+    public int getRoundNumber() {
+        return roundNumber;
     }
 }
