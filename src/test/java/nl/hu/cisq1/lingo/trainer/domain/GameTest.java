@@ -12,7 +12,6 @@ class GameTest {
         Game game = new Game();
         game.startgame();
         game.startNewRound("test");
-        assertEquals(game.getLastRound().getWordToGuess(), "test");
         assertEquals(game.getGameState(), Game.GameState.PLAYING);
 
     }

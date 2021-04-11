@@ -45,6 +45,9 @@ public class Game {
 
     public String makeGuess(String attempt){
         Round ronde = round.get(round.size()-1);
+        if(ronde.getAttempts()>5){
+            return "you are out of attempts, start a new round";
+        }
         if(ronde.guess(attempt).contains(".")) {
             return ronde.guess(attempt);
         }else{

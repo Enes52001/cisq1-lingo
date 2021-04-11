@@ -43,7 +43,7 @@ public class Round {
         this.wordToGuess = wordToGuess;
     }
 
-    public String getWordToGuess() {
-        return wordToGuess;
+    public int getAttempts() {
+        return attempts;
     }
 }

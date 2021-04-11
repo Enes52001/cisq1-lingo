@@ -170,7 +170,7 @@
                     <jvmArgs>
                         -Dspring.profiles.active=ci
                     </jvmArgs>
-                    <mutationThreshold>90</mutationThreshold>
+                    <mutationThreshold>75</mutationThreshold>
                     <timestampedReports>false</timestampedReports>
                 </configuration>
             </plugin>

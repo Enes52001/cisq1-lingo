@@ -66,24 +66,6 @@ class FeedbackTest {
 
         assertTrue((feedback.isGuessvalid()));
     }
-    @ParameterizedTest
-    @MethodSource("provideHintExamples")
-    @DisplayName("game gives hint")
-    void geeftHint(String Hint, String wordToGuess, List<Mark> marks){
-        String poging = "PAARD";
-        Feedback feedback = new Feedback(poging, marks);
-
-
-      //  assertTrue(feedback.giveHint());
-    }
-
-
-    static Stream<Arguments> provideHintExamples() {
-        return Stream.of(
-                Arguments.of("P....","PAARD", List.of(CORRECT, CORRECT, CORRECT, CORRECT, ABSENT))
-
-        );
-    }
 
 
 
