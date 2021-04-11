@@ -1,6 +1,7 @@
 package nl.hu.cisq1.lingo.trainer.domain;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -8,6 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class GameTest {
 
     @Test
+    @DisplayName("when game starts status=playing")
     void startgameStatusPlaying() {
         Game game = new Game();
         game.startgame();
@@ -17,6 +19,7 @@ class GameTest {
     }
 
     @Test
+    @DisplayName("zonder game kan geen round starten")
     void startNewRoundWhileNoGame() {
         Game game = new Game();
         game.setGameState(Game.GameState.ELIMINATED);
@@ -24,6 +27,7 @@ class GameTest {
     }
 
     @Test
+    @DisplayName("round wordt aangemaakt")
     void newRoundExists() {
         Game game = new Game();
         game.startgame();
@@ -32,6 +36,7 @@ class GameTest {
     }
 
     @Test
+    @DisplayName("rondes worden bijgehouden")
     void roundCount(){
         Game game = new Game();
         game.startgame();

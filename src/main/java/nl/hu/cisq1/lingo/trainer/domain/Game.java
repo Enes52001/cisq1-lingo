@@ -1,9 +1,6 @@
 package nl.hu.cisq1.lingo.trainer.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +13,8 @@ public class Game {
 //    @Column(name="score")
     private int score = 0;
     private GameState gameState;
-//    @OneToMany
+
+//    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private transient List<Round> round = new ArrayList<>();
 
 

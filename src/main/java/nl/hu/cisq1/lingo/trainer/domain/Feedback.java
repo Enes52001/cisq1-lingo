@@ -41,9 +41,6 @@ public class Feedback {
 //        return true;
     }
 
-    public String getAttempt() {
-        return attempt;
-    }
 
     public boolean isGuessvalid(){
         return marks.stream().noneMatch(mark -> mark == INVALID);
