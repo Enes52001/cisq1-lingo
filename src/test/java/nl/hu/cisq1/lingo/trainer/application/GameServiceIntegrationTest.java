@@ -51,7 +51,7 @@ class GameServiceIntegrationTest {
 
     @MethodSource("provideGuessWords")
     @ParameterizedTest
-    void guessIsRight(String guess, String feedback) {
+    void guessFeedbackIsRight(String guess, String feedback) {
         service.startNewRound(5);
         service.getGame().getLastRound().setWordToGuess("PAARD");
         assertEquals(service.guess(guess), feedback );

@@ -1,12 +1,8 @@
 package nl.hu.cisq1.lingo.trainer.domain;
 
-import org.junit.jupiter.params.provider.Arguments;
-
 import java.util.List;
-import java.util.stream.Stream;
 
-import static nl.hu.cisq1.lingo.trainer.domain.Mark.CORRECT;
-import static nl.hu.cisq1.lingo.trainer.domain.Mark.INVALID;
+import static nl.hu.cisq1.lingo.trainer.domain.Mark.*;
 
 public class Feedback {
     private final String attempt;
@@ -18,9 +14,15 @@ public class Feedback {
     }
 
     public String giveHint(){
+        for(int i = 0; i<marks.size() ; i++ ){
+            if (marks.get(i) == ABSENT){
+                marks.set(i, PRESENT);
+                break;
+            }
+        } // hier wordt 1 letter dat nog niet is geraden op PRESENT gezet zodat die in de tip meegegeven kan worden
         String hint = "";
         for(int i = 0; i<marks.size() ; i++ ){
-            if(marks.get(i) == CORRECT){
+            if(marks.get(i) == PRESENT){
                 hint = hint+attempt.charAt(i);
             }else{
                 hint=hint+".";
@@ -32,7 +34,7 @@ public class Feedback {
 
 
     public boolean isWordGuessed(){
-         return marks.stream().allMatch(mark -> mark == CORRECT);
+         return marks.stream().allMatch(mark -> mark == PRESENT);
 //        for(Mark mark: marks){
 //            if(mark != CORRECT){
 //                return false;

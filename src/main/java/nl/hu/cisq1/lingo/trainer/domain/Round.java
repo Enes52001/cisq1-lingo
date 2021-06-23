@@ -1,6 +1,5 @@
 package nl.hu.cisq1.lingo.trainer.domain;
 
-import javax.persistence.Entity;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +20,7 @@ public class Round {
         if(attempt.length() == wordToGuess.length()){
             for(int i = 0; i<attempt.length() ; i++ ){
                 if(attempt.charAt(i) == wordToGuess.charAt(i)){
-                    lijst.add(Mark.CORRECT);
+                    lijst.add(Mark.PRESENT);
                 }else{
                     lijst.add(Mark.ABSENT);
                 }

@@ -1,13 +1,11 @@
 package nl.hu.cisq1.lingo.trainer.domain;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import javax.validation.constraints.AssertTrue;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -22,7 +20,7 @@ class FeedbackTest {
 
 
         String poging = "PAARD";
-        List<Mark> marks = List.of(CORRECT, CORRECT, CORRECT, CORRECT, CORRECT);
+        List<Mark> marks = List.of(PRESENT, PRESENT, PRESENT, PRESENT, PRESENT);
         Feedback feedback = new Feedback(poging, marks);
 
 
@@ -35,7 +33,7 @@ class FeedbackTest {
 
 
         String poging = "PAARD";
-        List<Mark> marks = List.of(CORRECT, CORRECT, CORRECT, CORRECT, ABSENT);
+        List<Mark> marks = List.of(PRESENT, PRESENT, PRESENT, PRESENT, ABSENT);
         Feedback feedback = new Feedback(poging, marks);
 
 
@@ -60,7 +58,7 @@ class FeedbackTest {
 
 
         String poging = "PAARD";
-        List<Mark> marks = List.of(CORRECT, CORRECT, CORRECT, CORRECT, ABSENT);
+        List<Mark> marks = List.of(PRESENT, PRESENT, PRESENT, PRESENT, ABSENT);
         Feedback feedback = new Feedback(poging, marks);
 
 
@@ -78,11 +76,11 @@ class FeedbackTest {
     }
     static Stream<Arguments> hintGivesFeedback() {
         return Stream.of(
-                Arguments.of("PAARD", List.of(CORRECT, CORRECT, CORRECT, CORRECT, CORRECT), "PAARD"),
+                Arguments.of("PAARD", List.of(PRESENT, PRESENT, PRESENT, PRESENT, PRESENT), "PAARD"),
                 Arguments.of("KOE", List.of(INVALID, INVALID, INVALID, INVALID, INVALID), "....."),
                 Arguments.of("APPEL", List.of(ABSENT, ABSENT, ABSENT, ABSENT, ABSENT), "....."),
-                Arguments.of("AARDE", List.of(ABSENT, CORRECT, ABSENT, ABSENT, ABSENT), ".A..."),
-                Arguments.of("HAARD", List.of(ABSENT, CORRECT, CORRECT, CORRECT, CORRECT), ".AARD")
+                Arguments.of("AARDE", List.of(ABSENT, PRESENT, ABSENT, ABSENT, ABSENT), ".A..."),
+                Arguments.of("HAARD", List.of(ABSENT, PRESENT, PRESENT, PRESENT, PRESENT), ".AARD")
         );
     }
 
