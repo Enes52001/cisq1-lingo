@@ -25,7 +25,7 @@ public class Round {
                     lijst.add(Mark.ABSENT);
                 }
             }
-            Feedback feedback = new Feedback(attempt, lijst);
+            feedback = new Feedback(attempt, lijst);
             return feedback.giveHint();
         }else{
             for(int i = 0; i<wordToGuess.length() ; i++ ){
@@ -37,6 +37,9 @@ public class Round {
 
     }
 
+    public Feedback getFeedback() {
+        return feedback;
+    }
 
     public void setWordToGuess(String wordToGuess) {
         this.wordToGuess = wordToGuess;
