@@ -31,7 +31,10 @@ public class GameService {
     }
 
     public String guess(String guess){
-        return "your guess: "+game.makeGuess(guess)+"\ncurrent: "+game.getRoundStatus();
+        return game.makeGuess(guess);
+    }
+    public String roundStatus(){
+        return "\ncurrent: "+game.getRoundStatus();
     }
 
     public void setGame(Game game) {
