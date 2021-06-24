@@ -58,7 +58,7 @@ public class Game {
 
     public String getRoundStatus(){
         Round ronde = rounds.get(rounds.size()-1);
-        return ronde.getFeedback().getFeedbackStatus();
+        return ronde.getFeedbackStatus();
     }
 
     public Round getLastRound() {

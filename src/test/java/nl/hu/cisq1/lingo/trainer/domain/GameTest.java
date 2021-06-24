@@ -47,4 +47,17 @@ class GameTest {
     }
 
 
+    @Test
+    @DisplayName("hints worden onthouden")
+    void hintGetsSaved(){
+        Game game = new Game();
+        game.startgame();
+        game.startNewRound("GIRAF");
+        game.makeGuess("GROOT");
+        game.makeGuess("LIRYC");
+        assertTrue(game.getRoundStatus().contains("GIR.."));
+
+
+    }
+
 }
