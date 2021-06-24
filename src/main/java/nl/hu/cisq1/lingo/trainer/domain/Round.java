@@ -7,14 +7,16 @@ import java.util.List;
 public class Round {
     private int attempts = 0;
     private Feedback feedback;
-    private String wordToGuess;
+    private String wordToGuess = "";
     private List<String> trueMarks = new ArrayList<>();
 
-    public Round(String wordToGuess){
-        this.wordToGuess = wordToGuess;
+    public Round(String inputWordToGuess){
+        this.wordToGuess = inputWordToGuess;
 
-        for (int i = 0; i<wordToGuess.length(); i++){
-            trueMarks.add(".");
+        if (inputWordToGuess != null){
+            for (int i = 0; i<inputWordToGuess.length(); i++){
+                trueMarks.add(".");
+            }
         }
     }
 
@@ -37,7 +39,7 @@ public class Round {
             for(int i = 0; i<wordToGuess.length() ; i++ ){
                 lijst.add(Mark.INVALID);
             }
-            Feedback feedback = new Feedback(attempt, lijst);
+            feedback = new Feedback(attempt, lijst);
             updateTrueMarks();
             return feedback.giveHint();
         }
@@ -45,7 +47,7 @@ public class Round {
     }
 
     public void updateTrueMarks(){
-        for(int i = 0; i<wordToGuess.length() ; i++ ) {
+        for(int i = 0; i< trueMarks.size() ; i++ ) {
             if(String.valueOf(feedback.giveHint().charAt(i)) != "."){
                 if (trueMarks.get(i).equals(".")){
                     trueMarks.set(i, String.valueOf(feedback.giveHint().charAt(i)));
