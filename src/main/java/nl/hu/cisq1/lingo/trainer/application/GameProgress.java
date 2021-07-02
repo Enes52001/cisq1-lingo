@@ -18,6 +18,10 @@ public class GameProgress {
         this.hint = hint;
     }
 
+    public Long getId() {
+        return id;
+    }
+
     public Game.GameState getGameState() {
         return gameState;
     }

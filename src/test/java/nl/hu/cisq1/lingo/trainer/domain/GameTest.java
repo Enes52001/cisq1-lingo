@@ -7,4 +7,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class GameTest {
 
+    @Test
+    @DisplayName("checks if progress is correct*")
+    void isPorgressCorrect(){
+
+    }
 }

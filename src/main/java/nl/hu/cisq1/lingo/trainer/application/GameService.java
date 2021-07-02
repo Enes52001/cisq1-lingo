@@ -51,4 +51,8 @@ public class GameService {
         return gameRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("game bestaat niet"));
     }
+
+    public void saveGame(Game game){
+        gameRepository.save(game);
+    }
 }

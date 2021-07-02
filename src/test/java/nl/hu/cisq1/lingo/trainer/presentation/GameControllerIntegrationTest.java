@@ -1,6 +1,8 @@
 package nl.hu.cisq1.lingo.trainer.presentation;
 
 import nl.hu.cisq1.lingo.CiTestConfiguration;
+import nl.hu.cisq1.lingo.trainer.application.GameService;
+import nl.hu.cisq1.lingo.trainer.domain.Game;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,9 +26,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class GameControllerIntegrationTest {
     @Autowired
     private MockMvc mockMvc;
+    @Autowired
+    private GameService gameService;
 
     @Test
-    @DisplayName("start a new game")
+    @DisplayName("start a new game and see if it's actually started")
     void startNewGameWorks() throws Exception {
         RequestBuilder request = MockMvcRequestBuilders
                 .post("/lingo/game");
@@ -35,49 +39,37 @@ class GameControllerIntegrationTest {
                 .andExpect(status().isOk());
     }
 
-//    @Test
-//    @DisplayName("start a new round")
-//    void startNewRoundWorks() throws Exception {
-//        RequestBuilder request1 = MockMvcRequestBuilders
-//                .post("/lingo/startgame");
-//
-//        mockMvc.perform(request1);
-//        //er moet een game gestart zijn om round te kunnen starten
-//
-//        RequestBuilder request = MockMvcRequestBuilders
-//                .post("/lingo/startround")
-//                .param("lengte", "5");
-//
-//        mockMvc.perform(request)
-//                .andExpect(status().isOk())
-//                ;
-//    }
-//
-//    @Test
-//    @DisplayName("make a guess")
-//    void guessWorks() throws Exception {
-//
-//        RequestBuilder request1 = MockMvcRequestBuilders
-//                .post("/lingo/startgame");
-//
-//        mockMvc.perform(request1);
-//        //er moet een game gestart zijn om round te kunnen starten
-//
-//        RequestBuilder request2 = MockMvcRequestBuilders
-//                .post("/lingo/startround")
-//                .param("lengte", "5");
-//
-//        mockMvc.perform(request2);
-//        //game en round moeten gestart zijn om guess te testen
-//
-//
-//
-//
-//        RequestBuilder request = MockMvcRequestBuilders
-//                .post("/lingo/guess")
-//                .param("guess", "PAARD");
-//
-//        mockMvc.perform(request)
-//                .andExpect(status().isOk());
-//    }             // door persistence werkt niet meer
+    @Test
+    @DisplayName("start a new round and see if it's actually started")
+    void startNewRoundWorks() throws Exception {
+        Game game = new Game();
+        gameService.saveGame(game);
+        RequestBuilder request = MockMvcRequestBuilders
+                .post("/lingo/game/"+ ((int) game.getId())+"/round");
+
+        mockMvc.perform(request)
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    @DisplayName("make a guess")
+    void guessWorks() throws Exception {
+        Game game = new Game();
+        gameService.saveGame(game);
+
+        mockMvc.perform(MockMvcRequestBuilders
+                .post("/lingo/game/"+ game.getId()+"/round"));
+        //er moet een round gestart zijn om te kunnen guessen
+
+        RequestBuilder request = MockMvcRequestBuilders
+                .post("/lingo/game/"+ game.getId()+"/guess")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\n" +
+                        "    \"guess\": \"your_guess\"\n" +
+                        "}");
+
+
+        mockMvc.perform(request);
+        //game en round moeten gestart zijn om guess te testen
+    }
 }

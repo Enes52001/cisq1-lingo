@@ -102,4 +102,8 @@ public class Game {
 
         return this.rounds.get(this.rounds.size() - 1);
     }
+
+    public long getId() {
+        return id;
+    }
 }

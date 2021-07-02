@@ -9,7 +9,7 @@
 			"name": "lingo",
 			"item": [
 				{
-					"name": "startgame",
+					"name": "start game",
 					"request": {
 						"method": "POST",
 						"header": [
@@ -30,14 +30,14 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8080/lingo/startgame",
+							"raw": "localhost:8080/lingo/game",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
 								"lingo",
-								"startgame"
+								"game"
 							]
 						}
 					},
@@ -77,14 +77,16 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8080/lingo/startround",
+							"raw": "localhost:8080/lingo/game/{id}/round",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
 								"lingo",
-								"startround"
+								"game",
+								"{id}",
+								"round"
 							]
 						}
 					},
@@ -116,68 +118,24 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "",
+							"raw": "{\r\n    \"guess\": \"your_guess\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
+
 								}
 							}
 						},
 						"url": {
-							"raw": "localhost:8080/lingo/guess",
+							"raw": "localhost:8080/lingo/game/{id}/guess",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
 								"lingo",
-								"guess"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "make a guess",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "f6aedd51-4d82-41d8-96fc-36c6e8d9370a",
-								"exec": [
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/hal+json",
-								"type": "text",
-								"disabled": true
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "localhost:8080/lingo/guess",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"lingo",
+								"game",
+								"{id}",
 								"guess"
 							]
 						}

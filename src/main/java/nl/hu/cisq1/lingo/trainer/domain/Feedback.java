@@ -46,7 +46,7 @@ public class Feedback {
 
 
     public boolean isWordGuessed() {
-        return marks.stream().allMatch(mark -> mark == PRESENT);
+        return marks.stream().allMatch(mark -> mark == CORRECT);
 //        for(Mark mark: marks){
 //            if(mark != CORRECT){
 //                return false;
