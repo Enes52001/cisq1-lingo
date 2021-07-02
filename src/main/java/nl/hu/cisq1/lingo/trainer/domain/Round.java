@@ -117,6 +117,10 @@ public class Round {
         return this.wordToGuess.length();
     }
 
+    public String getWordToGuess() {
+        return wordToGuess;
+    }
+
     public String replaceCharUsingCharArray(String str, char ch, int index) {
         char[] chars = str.toCharArray();
         chars[index] = ch;

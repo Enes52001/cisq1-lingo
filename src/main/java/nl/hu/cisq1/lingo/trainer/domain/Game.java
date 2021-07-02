@@ -50,7 +50,6 @@ public class Game {
     }
 
 
-
     public enum GameState {
         WAITING_FOR_GAME,
         WAITING_FOR_ROUND,
@@ -95,7 +94,7 @@ public class Game {
         }
     }
 
-    private Round getCurrentRound() {
+    public Round getCurrentRound() {
         if (this.rounds.isEmpty()) {
             return null;
         }

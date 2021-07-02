@@ -33,10 +33,6 @@ public class Feedback {
                 hint = hint + attempt.charAt(i);
 
             }
-//            else if(hintGiven == false){
-//                hintGiven = true;
-//                hint = hint+attempt.charAt(i);
-//            }// hier wordt 1 letter dat nog niet is geraden meegegeven
             else {
                 hint = hint + ".";
             }
@@ -47,12 +43,7 @@ public class Feedback {
 
     public boolean isWordGuessed() {
         return marks.stream().allMatch(mark -> mark == CORRECT);
-//        for(Mark mark: marks){
-//            if(mark != CORRECT){
-//                return false;
-//            }
-//        }
-//        return true;
+
     }
 
 
