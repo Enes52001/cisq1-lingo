@@ -20,7 +20,7 @@ class FeedbackTest {
 
 
         String poging = "PAARD";
-        List<Mark> marks = List.of(PRESENT, PRESENT, PRESENT, PRESENT, PRESENT);
+        List<Mark> marks = List.of(CORRECT, CORRECT, CORRECT, CORRECT, CORRECT);
         Feedback feedback = new Feedback(poging, marks);
 
 
