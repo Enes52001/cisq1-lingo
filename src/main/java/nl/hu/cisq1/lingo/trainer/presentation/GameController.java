@@ -7,9 +7,11 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/lingo")
-public class GameController {
-
+public class GameController{
     private final GameService gameService;
+
+
+
 
     public GameController(GameService gameService) {
         this.gameService = gameService;

@@ -47,7 +47,7 @@ public class GameService {
         return game.showProgress();
     }
 
-    private Game getGame(Long id) {
+    public Game getGame(Long id) {
         return gameRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("game bestaat niet"));
     }

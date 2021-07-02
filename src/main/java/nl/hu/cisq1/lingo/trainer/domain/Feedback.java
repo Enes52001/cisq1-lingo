@@ -4,8 +4,7 @@ import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
 
-import static nl.hu.cisq1.lingo.trainer.domain.Mark.INVALID;
-import static nl.hu.cisq1.lingo.trainer.domain.Mark.PRESENT;
+import static nl.hu.cisq1.lingo.trainer.domain.Mark.*;
 
 @Entity
 public class Feedback {
@@ -30,7 +29,7 @@ public class Feedback {
 //        boolean hintGiven = false;
         String hint = "";
         for (int i = 0; i < marks.size(); i++) {
-            if (marks.get(i) == PRESENT) {
+            if (marks.get(i) == CORRECT) {
                 hint = hint + attempt.charAt(i);
 
             }
@@ -63,10 +62,6 @@ public class Feedback {
 
     public boolean isGuessInvalid() {
         return marks.stream().allMatch(mark -> mark == INVALID);
-    }
-
-    public String getAttempt() {
-        return attempt;
     }
 
     public List<Mark> getMarks() {

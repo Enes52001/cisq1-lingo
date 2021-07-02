@@ -72,7 +72,6 @@ public class Game {
             // error
             return;
         }
-        System.out.println("hier moet ie 3x komen ");
         gameState = GameState.PLAYING;
         Round ronde = new Round(wordToGuess);
         ronde.setWordToGuess(wordToGuess);
@@ -94,19 +93,6 @@ public class Game {
         } else if (!round.hasAttemptsLeft()) {
             gameState = GameState.ELIMINATED;
         }
-    }
-
-    public String getRoundStatus() {
-        Round ronde = rounds.get(rounds.size() - 1);
-        return ronde.getHint();
-    }
-
-    public GameState getGameState() {
-        return gameState;
-    }
-
-    public int getRoundNumber() {
-        return rounds.size();
     }
 
     private Round getCurrentRound() {

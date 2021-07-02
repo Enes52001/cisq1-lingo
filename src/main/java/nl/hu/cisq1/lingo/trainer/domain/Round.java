@@ -61,13 +61,14 @@ public class Round {
             }
         }
         String copyOfWordToGuess = wordToGuess;
-        for (int i = 0; i < attempt.length(); i++) {
+        String copyOfAttempt = attempt;
+        for (int i = 0; i < copyOfAttempt.length(); i++) {
             if (lijst.get(i) == Mark.ABSENT) {
                 for (int a = 0; a < copyOfWordToGuess.length(); a++) {
                     if (lijst.get(a) == Mark.ABSENT){
-                        if (copyOfWordToGuess.charAt(a) == attempt.charAt(i) & attempt.charAt(i) != '.'){
+                        if (copyOfWordToGuess.charAt(a) == copyOfAttempt.charAt(i) & copyOfAttempt.charAt(i) != '.'){
                             lijst.set(i, Mark.PRESENT);
-                            attempt = replaceCharUsingCharArray(attempt, '.', i);
+                            copyOfAttempt = replaceCharUsingCharArray(copyOfAttempt, '.', i);
                             copyOfWordToGuess = replaceCharUsingCharArray(copyOfWordToGuess, '.', a);
 
                         }

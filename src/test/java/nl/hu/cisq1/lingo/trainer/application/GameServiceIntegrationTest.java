@@ -34,13 +34,13 @@
 //
 //    @BeforeEach
 //    void beforeEachTest() throws IOException {
-//        service.startNewGame((long) 1);
+//        service.startNewGame();
 //    }
 //
 //
 //    @Test
 //    void startNewGameWorks() {
-//        assertEquals(Game.GameState.WAITING_FOR_ROUND, service.getGameById(1).getGameState());
+//        assertEquals(Game.GameState.WAITING_FOR_ROUND, service.getGame(1).getGameState());
 //    }
 //
 //    @Test
