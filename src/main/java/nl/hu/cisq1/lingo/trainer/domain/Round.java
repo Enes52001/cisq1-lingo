@@ -1,68 +1,99 @@
 package nl.hu.cisq1.lingo.trainer.domain;
 
+import org.hibernate.annotations.Cascade;
+
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-
+@Entity
 public class Round {
-    private int attempts = 0;
+    private static final int MAX_ATTEMPTS = 5;
+
+    @Id
+    @GeneratedValue
+    private Long id;
+
+    @ElementCollection
+    private final List<String> hint = new ArrayList<>();
+
+    @OneToOne
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private Feedback feedback;
-    private String wordToGuess = "";
-    private List<String> trueMarks = new ArrayList<>();
 
-    public Round(String inputWordToGuess){
-        this.wordToGuess = inputWordToGuess;
+    private int attempts = 0;
+    private String wordToGuess;
 
-        if (inputWordToGuess != null){
-            for (int i = 0; i<inputWordToGuess.length(); i++){
-                trueMarks.add(".");
-            }
+    public Round() {
+    }
+
+    public Round(String wordToGuess) {
+        this.wordToGuess = wordToGuess;
+
+        this.hint.add(String.valueOf(wordToGuess.charAt(0)));
+        for (int i = 1; i < wordToGuess.length(); i++) {
+            hint.add(".");
         }
     }
 
-    public String guess(String attempt){
+    public Feedback guess(String attempt) {
         attempts = attempts + 1;
         List<Mark> lijst = new ArrayList<Mark>();
-        attempt = attempt.toUpperCase();
-        if(attempt.length() == wordToGuess.length()){
-            for(int i = 0; i<attempt.length() ; i++ ){
-                if(attempt.charAt(i) == wordToGuess.charAt(i)){
-                    lijst.add(Mark.PRESENT);
-                }else{
+
+        attempt = attempt.toLowerCase();
+
+        // present -> letter zit in het woord, maar op een andere plek
+        // voorkom dat letters twee keer worden gemarkt
+        // N I E T S
+        // N E T T E
+        // C P A C A
+        if (attempt.length() == wordToGuess.length()) {
+            for (int i = 0; i < attempt.length(); i++) {
+                if (attempt.charAt(i) == wordToGuess.charAt(i)) {
+                    lijst.add(Mark.CORRECT);
+                } else {
                     lijst.add(Mark.ABSENT);
                 }
             }
-            feedback = new Feedback(attempt, lijst);
-            updateTrueMarks();
-            return feedback.giveHint();
-        }else{
-            for(int i = 0; i<wordToGuess.length() ; i++ ){
+        } else {
+            for (int i = 0; i < wordToGuess.length(); i++) {
                 lijst.add(Mark.INVALID);
             }
-            feedback = new Feedback(attempt, lijst);
-            updateTrueMarks();
-            return feedback.giveHint();
         }
+        String copyOfWordToGuess = wordToGuess;
+        for (int i = 0; i < attempt.length(); i++) {
+            if (lijst.get(i) == Mark.ABSENT) {
+                for (int a = 0; a < copyOfWordToGuess.length(); a++) {
+                    if (lijst.get(a) == Mark.ABSENT){
+                        if (copyOfWordToGuess.charAt(a) == attempt.charAt(i) & attempt.charAt(i) != '.'){
+                            lijst.set(i, Mark.PRESENT);
+                            attempt = replaceCharUsingCharArray(attempt, '.', i);
+                            copyOfWordToGuess = replaceCharUsingCharArray(copyOfWordToGuess, '.', a);
 
-    }
-
-    public void updateTrueMarks(){
-        for(int i = 0; i< trueMarks.size() ; i++ ) {
-            if(String.valueOf(feedback.giveHint().charAt(i)) != "."){
-                if (trueMarks.get(i).equals(".")){
-                    trueMarks.set(i, String.valueOf(feedback.giveHint().charAt(i)));
+                        }
+                    }           // oplossing op PRESENT probleem
                 }
             }
         }
+
+        feedback = new Feedback(attempt, lijst);
+        updateHint();
+
+        return feedback;
     }
 
-    public String getFeedbackStatus(){
-        String hint = "";
+    public void updateHint() {
+        String nextHint = feedback.giveHint();
 
-        for(int i = 0; i<trueMarks.size() ; i++ ) {
-            hint = hint+ trueMarks.get(i);
+        for (int i = 0; i < hint.size(); i++) {
+            if (nextHint.charAt(i) != '.') {
+                hint.set(i, String.valueOf(nextHint.charAt(i)));
+            }
         }
-            return "\ncurrent status: "+hint;
+    }
+
+    public String getHint() {
+        return String.join("", this.hint);
     }
 
     public Feedback getFeedback() {
@@ -73,7 +104,21 @@ public class Round {
         this.wordToGuess = wordToGuess;
     }
 
+    public boolean hasAttemptsLeft() {
+        return MAX_ATTEMPTS - attempts > 0;
+    }
+
     public int getAttempts() {
         return attempts;
+    }
+
+    public int getWordLength() {
+        return this.wordToGuess.length();
+    }
+
+    public String replaceCharUsingCharArray(String str, char ch, int index) {
+        char[] chars = str.toCharArray();
+        chars[index] = ch;
+        return String.valueOf(chars);
     }
 }

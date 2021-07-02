@@ -62,7 +62,7 @@ class FeedbackTest {
         Feedback feedback = new Feedback(poging, marks);
 
 
-        assertTrue((feedback.isGuessvalid()));
+        assertTrue((feedback.isGuessValid()));
     }
 
 

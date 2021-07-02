@@ -1,42 +1,32 @@
 package nl.hu.cisq1.lingo.trainer.presentation;
 
+import nl.hu.cisq1.lingo.trainer.application.GameProgress;
 import nl.hu.cisq1.lingo.trainer.application.GameService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.AutoConfigureOrder;
+import nl.hu.cisq1.lingo.trainer.presentation.dto.Guess;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/lingo")
 public class GameController {
-    @Autowired
-    private GameService gameService;
-    private int lengte = 5;
 
-    @PostMapping("/startgame")
-    public void startNewGame(){
-        gameService.startNewGame();
-    }
-    @PostMapping("/startround")
-    public void startNewRound(){
-        gameService.startNewRound(lengte);
-        if (lengte == 5){
-            lengte = 6;
-        }
-        else if(lengte == 6){
-            lengte = 7;
-        }else if(lengte == 7){
-            lengte = 5;
-        }
-        // na een 5-letterwoord hoort een 6-letterwoord te komen.
-        // Als dat woord goed wordt geraden komt een 7-letterwoord en daarna weer een 5-letterwoord.
+    private final GameService gameService;
 
+    public GameController(GameService gameService) {
+        this.gameService = gameService;
     }
 
-    @PostMapping("/guess")
-    public String Guess(@RequestParam String guess){
-        return gameService.guess(guess);
-
+    @PostMapping("/game")
+    public GameProgress startNewGame(){
+        return gameService.startNewGame();
     }
 
+    @PostMapping("/game/{id}/round")
+    public GameProgress startNewRound(@PathVariable Long id){
+        return gameService.startNewRound(id);
+    }
 
+    @PostMapping("/game/{id}/guess")
+    public GameProgress Guess(@PathVariable Long id, @RequestBody Guess guess){
+        return gameService.guess(id, guess.getGuess());
+    }
 }

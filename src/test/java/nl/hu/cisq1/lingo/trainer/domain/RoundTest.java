@@ -16,20 +16,18 @@ class RoundTest {
 
     @ParameterizedTest
     @MethodSource("provideGuessWords")
-    @DisplayName("kijken of de guess functie het doet")
-    void guessWords(String guess, String feedback) {
-        Round round = new Round("PAARD");
-        assertEquals(round.guess(guess), feedback);
-
+    @DisplayName("give feedback based on guess")
+    void guessWords(String wordToGuess, String attempt, List<Mark> expectedFeedback) {
+        Round round = new Round(wordToGuess);
+        Feedback actualFeedback = round.guess(attempt);
+        assertEquals(expectedFeedback, actualFeedback.getMarks());
     }
 
     static Stream<Arguments> provideGuessWords() {
         return Stream.of(
-                Arguments.of("PAARD", "PAARD"),
-                Arguments.of("KOE", "....."),
-                Arguments.of("APPEL", "....."),
-                Arguments.of("AARDE", ".A..."),
-                Arguments.of("HAARD", ".AARD")
+                Arguments.of("niets", "niets", List.of(CORRECT, CORRECT, CORRECT, CORRECT, CORRECT)),
+                Arguments.of("niets", "polos", List.of(ABSENT, ABSENT, ABSENT, ABSENT, CORRECT)),
+                Arguments.of("niets", "nette", List.of(CORRECT, PRESENT, ABSENT, CORRECT, ABSENT))
 
         );
     }

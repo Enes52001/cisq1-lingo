@@ -1,5 +1,8 @@
 package nl.hu.cisq1.lingo.trainer.domain;
 
+import nl.hu.cisq1.lingo.trainer.application.GameProgress;
+import org.hibernate.annotations.Cascade;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -7,66 +10,95 @@ import java.util.List;
 @Entity
 public class Game {
     @Id
-//    @Column(name="round number")
-    private int roundNumber = 0;
-//    @Column(name="score")
+    @GeneratedValue
+    private long id;
     private int score = 0;
-    private GameState gameState;
 
-//    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private transient List<Round> rounds = new ArrayList<>();
+    @Enumerated(value = EnumType.STRING)
+    private GameState gameState = GameState.WAITING_FOR_GAME;
+
+    @OneToMany
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    private List<Round> rounds = new ArrayList<>();
+
+    public int getNextWordLength() {
+        Round round = getCurrentRound();
+        if (round == null) {
+            return 5;
+        }
+
+        int wordLength = round.getWordLength();
+        if (wordLength == 5) {
+            return 6;
+        }
+
+        if (wordLength == 6) {
+            return 7;
+        }
+
+        return 5;
+    }
+
+    public GameProgress showProgress() {
+        Round currentRound = this.getCurrentRound();
+
+        if (currentRound == null) {
+            return new GameProgress(id, gameState, score, null, null);
+        }
+
+        return new GameProgress(id, gameState, score, currentRound.getFeedback(), currentRound.getHint());
+    }
 
 
-    public enum GameState{
+
+    public enum GameState {
+        WAITING_FOR_GAME,
         WAITING_FOR_ROUND,
         PLAYING,
         ELIMINATED,
-        WIN
     }
 
-
-    public void startgame(){
-        setGameState(GameState.WAITING_FOR_ROUND);
-    }
-
-    public Round startNewRound(String wordToGuess) {
-        if (gameState == GameState.ELIMINATED | gameState == GameState.WIN) {
-            return null;
+    public void startGame() {
+        if (gameState != GameState.WAITING_FOR_GAME) {
+            // error
+            return;
         }
-        setGameState(GameState.PLAYING);
+
+        gameState = GameState.WAITING_FOR_ROUND;
+    }
+
+    public void startNewRound(String wordToGuess) {
+        if (gameState != GameState.WAITING_FOR_ROUND) {
+            // error
+            return;
+        }
+        System.out.println("hier moet ie 3x komen ");
+        gameState = GameState.PLAYING;
         Round ronde = new Round(wordToGuess);
         ronde.setWordToGuess(wordToGuess);
         rounds.add(ronde);
-        roundNumber = (rounds.size());
-        return ronde;
     }
 
-    public String makeGuess(String attempt){
-        Round ronde = rounds.get(rounds.size()-1);
-        if(ronde.getAttempts()>5){
-            return "you are out of attempts, start a new round";
-        }
-        else if(ronde.guess(attempt).contains(".")) {
-            return ronde.guess(attempt);
-        }else{
-            score = score +( 5 * (( 5 - ronde.getAttempts()) + 5 ));
-            setGameState(GameState.WIN);
-            return ronde.guess(attempt);
+    public void makeGuess(String attempt) {
+        if (gameState != GameState.PLAYING) {
+            // error
+            return;
         }
 
+        Round round = this.getCurrentRound();
+
+        Feedback feedback = round.guess(attempt);
+        if (feedback.isWordGuessed()) {
+            gameState = GameState.WAITING_FOR_ROUND;
+            score = score + (5 * ((5 - round.getAttempts()) + 5));
+        } else if (!round.hasAttemptsLeft()) {
+            gameState = GameState.ELIMINATED;
+        }
     }
 
-    public String getRoundStatus(){
-        Round ronde = rounds.get(rounds.size()-1);
-        return ronde.getFeedbackStatus();
-    }
-
-    public Round getLastRound() {
-        return rounds.get(rounds.size()-1);
-    }
-
-    public void setGameState(GameState gameState) {
-        this.gameState = gameState;
+    public String getRoundStatus() {
+        Round ronde = rounds.get(rounds.size() - 1);
+        return ronde.getHint();
     }
 
     public GameState getGameState() {
@@ -74,6 +106,14 @@ public class Game {
     }
 
     public int getRoundNumber() {
-        return roundNumber;
+        return rounds.size();
+    }
+
+    private Round getCurrentRound() {
+        if (this.rounds.isEmpty()) {
+            return null;
+        }
+
+        return this.rounds.get(this.rounds.size() - 1);
     }
 }
