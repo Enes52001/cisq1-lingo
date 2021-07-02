@@ -28,6 +28,7 @@ public class Game {
         }
 
         int wordLength = round.getWordLength();
+
         if (wordLength == 5) {
             return 6;
         }
