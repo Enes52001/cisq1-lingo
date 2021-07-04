@@ -28,7 +28,7 @@ public class GameController {
 
     @PostMapping("/game/{id}/round")
     public GameProgress startNewRound(@PathVariable Long id) throws HttpClientErrorException {
-        // als ID niet bestaat in database, 404 error returnen
+        // als ID niet bestaat in database, 404 returnen
         return gameService.startNewRound(id);
     }
 
